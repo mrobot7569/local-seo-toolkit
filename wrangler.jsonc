@@ -1,0 +1,13 @@
+{
+  "name": "local-seo-toolkit",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-23",
+  "workers_dev": true,
+  "containers": [
+    { "class_name": "Toolkit", "image": "./Dockerfile", "max_instances": 1 }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "TOOLKIT", "class_name": "Toolkit" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Toolkit"] }]
+}
