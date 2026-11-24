@@ -1481,7 +1481,7 @@ async function handleDfsProxy(req, res) {
 }
 
 /* ---------------- Static + routing ---------------- */
-const server = http.createServer(async (req, res) => {
+async function handleRequest(req, res) {
   const url = new URL(req.url, "http://localhost");
   try {
     if (req.method === "POST" && url.pathname === "/api/test") return await handleRankTest(req, res);
@@ -1512,5 +1512,9 @@ const server = http.createServer(async (req, res) => {
     console.error(err);
     if (!res.headersSent) sendJson(res, 500, { ok: false, error: "Server error: " + err.message });
   }
-});
-server.listen(PORT, () => console.log("Local SEO Toolkit listening on " + PORT));
+}
+
+module.exports = handleRequest;
+if (require.main === module) {
+  http.createServer(handleRequest).listen(PORT, () => console.log("Local SEO Toolkit listening on " + PORT));
+}
